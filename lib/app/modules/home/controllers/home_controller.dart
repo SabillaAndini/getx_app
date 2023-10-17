@@ -2,14 +2,22 @@ import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   final allItems = <String>[
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'item 5',
-    'item 6'
+    'Seventeen T-Shirt',
+    'Tote Bag',
+    'ADIOLI Men Sweater',
+    'Nike futura washed h86 cap',
+    'Converse',
+    'Women Marhen.j Canvas Tote Bag'
   ];
   final filteredItems = <String>[].obs;
+  final itemImages = <String>[
+    'assets/item1.png',
+    'assets/item2.png',
+    'assets/item3.png',
+    'assets/item4.png',
+    'assets/item5.png',
+    'assets/item6.png',
+  ];
 
   @override
   void onInit() {
@@ -29,4 +37,8 @@ class HomeController extends GetxController {
   void addProduct(String s) {}
 
   void applyFilter(String value) {}
+
+  List<String> getItemImages() {
+    return itemImages;
+  }
 }

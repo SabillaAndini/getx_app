@@ -9,7 +9,27 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HomeView'),
+        backgroundColor: Colors.white,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(
+                'assets/fake store logo.png',
+                width: 40,
+                height: 40,
+              ),
+            ),
+            const Text(
+              'Fake Store',
+              style: TextStyle(
+                color: Color(0xFF802c6e), // Warna teks ungu dengan kode hex
+                fontWeight: FontWeight.bold, // Mengatur teks menjadi bold
+              ),
+            )
+          ],
+        ),
         centerTitle: true,
       ),
       body: Padding(
@@ -22,10 +42,10 @@ class HomeView extends GetView<HomeController> {
                 controller.filterData(value);
               },
               decoration: InputDecoration(
-                hintText: 'Search...',
-                prefixIcon: Icon(Icons.search),
+                hintText: 'search product',
+                suffixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(40.0),
                 ),
               ),
             ),
@@ -40,13 +60,15 @@ class HomeView extends GetView<HomeController> {
                     ),
                     itemCount: controller.filteredItems.length,
                     itemBuilder: (context, index) {
+                      final itemImage = controller.getItemImages()[index];
                       return GridItemWidget(
                         item: controller.filteredItems[index],
+                        imageAssetPath: itemImage,
                       );
                     },
                   ),
                   Positioned(
-                    bottom: 16.0,
+                    bottom: 24.0, // Perbesar jarak dari bawah
                     right: 16.0,
                     child: ElevatedButton(
                       onPressed: () {
@@ -55,11 +77,31 @@ class HomeView extends GetView<HomeController> {
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
-                            Colors.purple, // Warna latar belakang ungu
+                            Color(0xFF802c6e), // Warna latar belakang ungu
+                        minimumSize: Size(160, 48), // Mengatur tinggi tombol
                       ),
-                      child: Text(
-                        "Add New Product",
-                        style: TextStyle(color: Colors.white),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment
+                            .spaceBetween, // Mengatur ikon di sebelah kanan
+                        children: [
+                          Text(
+                            "Add New Product",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          SizedBox(width: 8), // Tambahkan jarak horizontal
+                          Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Colors.white, // Warna outline
+                              ),
+                            ),
+                            child: Icon(
+                              Icons.add,
+                              color: Colors.white, // Warna ikon
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -75,14 +117,25 @@ class HomeView extends GetView<HomeController> {
 
 class GridItemWidget extends StatelessWidget {
   final String item;
+  final String imageAssetPath; // Tambahkan properti untuk path gambar asset
 
-  GridItemWidget({required this.item});
+  GridItemWidget({required this.item, required this.imageAssetPath});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Center(
-        child: Text(item),
+      child: Column(
+        children: [
+          Image.asset(
+            imageAssetPath, // Menggunakan path gambar asset dari properti
+            fit: BoxFit.cover,
+            height: 150,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(item),
+          ),
+        ],
       ),
     );
   }
