@@ -7,38 +7,108 @@ class DetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('DetailView'),
+        backgroundColor: Colors.white,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(
+                'assets/fake store logo.png',
+                width: 40,
+                height: 40,
+              ),
+            ),
+            const Text(
+              'Fake Store',
+              style: TextStyle(
+                color: Color(0xFF802c6e),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Container(
-            width: 390.0,
-            height: 210.81,
-            margin: const EdgeInsets.only(top: 80.0),
-            alignment: Alignment.topCenter,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.25),
-                  spreadRadius: 4,
-                  offset: const Offset(0, 4),
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment
+              .start, // Mengubah alignment dari mainAxisAlignment menjadi crossAxisAlignment
+          children: [
+            SizedBox(height: 10),
+            Container(
+              width: 350,
+              height: 200,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Colors.white,
+                boxShadow: const [
+                  BoxShadow(
+                    blurRadius: 2,
+                    color: Color.fromARGB(255, 223, 222, 222),
+                  ),
+                ],
+              ),
+              child: Image.asset(
+                'assets/item1.png',
+                width: 400,
+                height: 400,
+                scale: 5,
+              ),
+            ),
+            SizedBox(height: 10), // Menambahkan spasi
+            Container(
+              width: 390,
+              height: 48,
+              child: Text(
+                'Seventeen T-Shirt',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontFamily: 'Poppins',
                 ),
-              ],
+              ),
             ),
-            child: Image.network(
-              'https://images.tokopedia.net/img/cache/900/hDjmkQ/2023/5/8/559a8392-4d0a-41af-8b04-0520e3fcc549.jpg', // Ganti dengan URL gambar yang sesuai
-              fit: BoxFit.cover, // Menyesuaikan gambar ke dalam kotak
+            Container(
+              width: 54,
+              height: 21,
+              child: Text(
+                '\$109.95',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black,
+                  fontFamily: 'Poppins',
+                ),
+              ),
             ),
-          ),
-          SizedBox(height: 16), // Tambahkan jarak vertikal di sini
-          const Center(
-            child: Text(
-              'DetailView is working',
-              style: TextStyle(fontSize: 20),
+            Container(
+              width: 93,
+              height: 18,
+              child: Text(
+                'Product Details',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.black,
+                  fontFamily: 'Poppins',
+                ),
+              ),
             ),
-          ),
-        ],
+            Container(
+              width: 390,
+              height: 30,
+              child: Text(
+                'Comfortable and stylish T-shirt',
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Colors.black,
+                  fontFamily: 'Poppins',
+                  height: 1.5,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

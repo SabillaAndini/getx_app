@@ -10,6 +10,7 @@ dependencies:
   get: 4.6.6
   flutter:
     sdk: flutter
+  
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -26,3 +27,4 @@ flutter:
     - assets/item4.png
     - assets/item5.png
     - assets/item6.png
+    - assets/formimage.png

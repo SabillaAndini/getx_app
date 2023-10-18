@@ -1,23 +1,17 @@
 import 'package:get/get.dart';
 
 class FormController extends GetxController {
-  //TODO: Implement FormController
+  final RxList<Product> products = <Product>[].obs;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  void addProduct(String name, double price) {
+    final product = Product(name: name, price: price);
+    products.add(product);
   }
+}
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+class Product {
+  final String name;
+  final double price;
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
+  Product({required this.name, required this.price});
 }
