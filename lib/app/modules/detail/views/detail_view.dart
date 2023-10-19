@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-class DetailView extends StatelessWidget {
+class DetailView extends StatefulWidget {
   const DetailView({Key? key}) : super(key: key);
 
+  @override
+  State<DetailView> createState() => _DetailViewState();
+}
+
+class _DetailViewState extends State<DetailView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -168,13 +173,75 @@ class DetailView extends StatelessWidget {
             child: Icon(Icons.edit),
           ),
           SizedBox(
-              height:
-                  16), // Jarak vertikal antara tombol Edit dan tombol Delete
+            height: 16,
+          ), // Jarak vertikal antara tombol Edit dan tombol Delete
           FloatingActionButton(
             onPressed: () {
-              // Tambahkan aksi untuk tombol Delete
+              showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                  title: Column(
+                    children: [
+                      Container(
+                        width: 250,
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.purple, // Warna latar belakang ungu
+                          shape: BoxShape
+                              .rectangle, // Membuat latar belakang lingkaran
+                        ),
+                        child: Icon(
+                          Icons.help, // Ikon tanda tanya
+                          color: Colors.white, // Warna ikon putih
+                        ),
+                      ),
+                      SizedBox(height: 15), // Spasi antara ikon dan teks
+                      Text(
+                        'Konfirmasi Hapus',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                  titlePadding: EdgeInsets.all(8),
+                  content: Text(
+                    'Anda yakin ingin menghapus ini?',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                  actions: [
+                    ButtonBar(
+                      alignment: MainAxisAlignment.center, // Pusatkan tombol
+                      children: [
+                        TextButton(
+                          child: Text("Batal"),
+                          onPressed: () {
+                            Navigator.of(context).pop(); // Tutup dialog
+                          },
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors
+                                .red, // Warna latar belakang tombol "Hapus"
+                          ),
+                          onPressed: () {
+                            // Tambahkan tindakan penghapusan di sini
+                            Navigator.of(context).pop(); // Tutup dialog
+                          },
+                          child: Text("Hapus"),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
             },
-            backgroundColor: Colors.red, // Ganti warna sesuai kebutuhan
+            backgroundColor: Colors.red,
             child: Icon(Icons.delete),
           ),
         ],
