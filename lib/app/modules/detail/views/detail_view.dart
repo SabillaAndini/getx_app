@@ -32,8 +32,7 @@ class DetailView extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment
-              .start, // Mengubah alignment dari mainAxisAlignment menjadi crossAxisAlignment
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 10),
             Container(
@@ -57,24 +56,71 @@ class DetailView extends StatelessWidget {
                 scale: 5,
               ),
             ),
-            SizedBox(height: 10), // Menambahkan spasi
+            SizedBox(height: 10),
             Container(
               width: 390,
               height: 48,
-              child: Text(
-                'Seventeen T-Shirt',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                  fontFamily: 'Poppins',
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Seventeen T-Shirt',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontFamily: 'Poppins',
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      for (int i = 0; i < 4; i++)
+                        Icon(
+                          Icons.star,
+                          color: Colors.yellow,
+                          size: 14,
+                        ),
+                      Icon(
+                        Icons.star,
+                        color: Colors.grey,
+                        size: 14,
+                      ),
+                      Text(
+                        '4.5',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Container(
+                        width: 1,
+                        height: 14,
+                        color: Colors.grey,
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        '256',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
             Container(
               width: 54,
               height: 21,
               child: Text(
-                '\$109.95',
+                '\$24.00',
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.black,
@@ -109,6 +155,29 @@ class DetailView extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              // Tambahkan aksi untuk tombol Edit
+            },
+            backgroundColor: Colors.yellow, // Ganti warna sesuai kebutuhan
+            child: Icon(Icons.edit),
+          ),
+          SizedBox(
+              height:
+                  16), // Jarak vertikal antara tombol Edit dan tombol Delete
+          FloatingActionButton(
+            onPressed: () {
+              // Tambahkan aksi untuk tombol Delete
+            },
+            backgroundColor: Colors.red, // Ganti warna sesuai kebutuhan
+            child: Icon(Icons.delete),
+          ),
+        ],
       ),
     );
   }

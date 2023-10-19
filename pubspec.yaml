@@ -10,8 +10,7 @@ dependencies:
   get: 4.6.6
   flutter:
     sdk: flutter
-  
-
+   
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
@@ -19,8 +18,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  assets: # Tambahkan bagian ini untuk asset gambar
-    - assets/fake store logo.png # Gantilah dengan path ke gambar Anda
+  assets: 
+    - assets/fake store logo.png
     - assets/item1.png
     - assets/item2.png
     - assets/item3.png
