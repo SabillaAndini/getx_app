@@ -12,14 +12,10 @@ class FormController extends GetxController {
 }
 
 class Product {
-  final String name;
-  final String category;
-  final double price;
-  final String description;
+  String? name;
+  String? category;
+  double? price;
+  String? description;
 
-  Product(
-      {required this.name,
-      required this.category,
-      required this.price,
-      required this.description});
+  Product({this.name, this.category, this.price, this.description});
 }

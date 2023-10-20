@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx_app/app/routes/app_pages.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -114,90 +115,94 @@ class HomeView extends GetView<HomeController> {
               itemBuilder: (context, index) {
                 final product = homeController.products[index];
 
-                return Container(
-                  // Tinggi Container ditingkatkan untuk membuatnya lebih panjang
-                  height: 400, // Ubah tinggi sesuai dengan kebutuhan Anda
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey,
-                        blurRadius: 4,
-                        spreadRadius: 1,
-                        offset: Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: Image.asset(
-                          product.image,
-                          width: 100,
-                          height: 125,
+                return GestureDetector(
+                  onTap: () => Get.toNamed(Routes.DETAIL, arguments: product),
+                  child: Container(
+                    // Tinggi Container ditingkatkan untuk membuatnya lebih panjang
+                    height: 400, // Ubah tinggi sesuai dengan kebutuhan Anda
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 4,
+                          spreadRadius: 1,
+                          offset: Offset(0, 4),
                         ),
-                      ),
-                      SizedBox(height: 5),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 7, left: 7),
-                        child: Text(
-                          product.title,
-                          style: TextStyle(
-                            overflow: TextOverflow.ellipsis,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5),
+                          child: Image.asset(
+                            product.image ?? "",
+                            width: 100,
+                            height: 125,
                           ),
-                          maxLines: 1,
                         ),
-                      ),
-                      SizedBox(height: 6),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 7, left: 7),
-                        child: Text(
-                          product.description,
-                          style: TextStyle(
-                            overflow: TextOverflow.ellipsis,
-                            fontSize: 13,
+                        SizedBox(height: 5),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 7, left: 7),
+                          child: Text(
+                            product.title ?? '',
+                            style: TextStyle(
+                              overflow: TextOverflow.ellipsis,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                            maxLines: 1,
                           ),
-                          maxLines: 2,
                         ),
-                      ),
-                      SizedBox(height: 6),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 7, right: 7),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              '\$${product.price.toStringAsFixed(2)}',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
+                        SizedBox(height: 6),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 7, left: 7),
+                          child: Text(
+                            product.description ?? "",
+                            style: TextStyle(
+                              overflow: TextOverflow.ellipsis,
+                              fontSize: 13,
+                            ),
+                            maxLines: 2,
+                          ),
+                        ),
+                        SizedBox(height: 6),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 7, right: 7),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                '\$${(product.price ?? 0).toStringAsFixed(2)}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Icon(
-                                  Icons.star,
-                                  color: Colors.yellow,
-                                  size: 16,
-                                ),
-                                Text(
-                                  '${homeController.products[index].rating.rate.toString()}',
-                                  style: TextStyle(
-                                    color: Colors.black,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Icon(
+                                    Icons.star,
+                                    color: Colors.yellow,
+                                    size: 16,
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                  Text(
+                                    '${homeController.products[index].rating?.rate.toString()}',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               },

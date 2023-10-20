@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:getx_app/app/modules/home/controllers/home_controller.dart';
 
 class DetailView extends StatefulWidget {
-  const DetailView({Key? key}) : super(key: key);
-
+  DetailView({Key? key}) : super(key: key);
+  Product sabilla = Get.arguments ?? Product();
   @override
   State<DetailView> createState() => _DetailViewState();
 }
@@ -50,12 +52,12 @@ class _DetailViewState extends State<DetailView> {
                 boxShadow: const [
                   BoxShadow(
                     blurRadius: 2,
-                    color: Color.fromARGB(255, 223, 222, 222),
+                    color: Color.fromARGB(255, 150, 144, 144),
                   ),
                 ],
               ),
               child: Image.asset(
-                'assets/item1.png',
+                widget.sabilla.image ?? "",
                 width: 400,
                 height: 400,
                 scale: 5,
@@ -71,7 +73,7 @@ class _DetailViewState extends State<DetailView> {
                   Row(
                     children: [
                       Text(
-                        'Seventeen T-Shirt',
+                        widget.sabilla.title ?? "",
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.black,
@@ -125,7 +127,7 @@ class _DetailViewState extends State<DetailView> {
               width: 54,
               height: 21,
               child: Text(
-                '\$24.00',
+                '\$${widget.sabilla.price ?? ""}',
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.black,
@@ -149,7 +151,7 @@ class _DetailViewState extends State<DetailView> {
               width: 390,
               height: 30,
               child: Text(
-                'Comfortable and stylish T-shirt',
+                widget.sabilla.description ?? "",
                 style: TextStyle(
                   fontSize: 10,
                   color: Colors.black,
@@ -177,73 +179,123 @@ class _DetailViewState extends State<DetailView> {
           ), // Jarak vertikal antara tombol Edit dan tombol Delete
           FloatingActionButton(
             onPressed: () {
-              showDialog(
-                context: context,
-                builder: (_) => AlertDialog(
-                  title: Column(
-                    children: [
-                      Container(
-                        width: 250,
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: Colors.purple, // Warna latar belakang ungu
-                          shape: BoxShape
-                              .rectangle, // Membuat latar belakang lingkaran
-                        ),
-                        child: Icon(
-                          Icons.help, // Ikon tanda tanya
-                          color: Colors.white, // Warna ikon putih
-                        ),
-                      ),
-                      SizedBox(height: 15), // Spasi antara ikon dan teks
-                      Text(
-                        'Konfirmasi Hapus',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
+              Get.dialog(
+                Dialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
                   ),
-                  titlePadding: EdgeInsets.all(8),
-                  content: Text(
-                    'Anda yakin ingin menghapus ini?',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 12,
-                    ),
-                  ),
-                  actions: [
-                    ButtonBar(
-                      alignment: MainAxisAlignment.center, // Pusatkan tombol
+                  child: Container(
+                    child: Stack(
                       children: [
-                        TextButton(
-                          child: Text("Batal"),
-                          onPressed: () {
-                            Navigator.of(context).pop(); // Tutup dialog
-                          },
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors
-                                .red, // Warna latar belakang tombol "Hapus"
+                        Container(
+                          width: double.infinity,
+                          height: 110,
+                          decoration: BoxDecoration(
+                            color: Color(0xffF2D2EB),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(15),
+                              topRight: Radius.circular(15),
+                            ),
                           ),
-                          onPressed: () {
-                            // Tambahkan tindakan penghapusan di sini
-                            Navigator.of(context).pop(); // Tutup dialog
-                          },
-                          child: Text("Hapus"),
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Align(
+                              alignment: Alignment.center,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 5, bottom: 10),
+                                child: Icon(
+                                  Icons
+                                      .help_outline, // Ganti dengan ikon "help_outline"
+                                  size: 100,
+                                  color: Color(0xff802c6e),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 17),
+                            Container(
+                              padding: EdgeInsets.only(left: 30, right: 30),
+                              child: Text(
+                                'Are you sure?',
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  color: Color(0xff802c6e),
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              padding: EdgeInsets.only(left: 30, right: 30),
+                              child: Text(
+                                'Do you really want to delete this product? You will not be able to undo this action!',
+                                style: TextStyle(
+                                  fontFamily: 'Poppins Regular',
+                                  color: Color(0xff802c6e),
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ),
+                            ButtonBar(
+                              alignment: MainAxisAlignment.center,
+                              children: [
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    side: BorderSide(
+                                      color: Color(0xff802c6e),
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    fixedSize: Size(100, 15),
+                                  ),
+                                  onPressed: () {
+                                    Get.back();
+                                  },
+                                  child: Text(
+                                    'No',
+                                    style: TextStyle(
+                                      fontFamily: 'Poppins Regular',
+                                      color: Color(0xff802c6e),
+                                    ),
+                                  ),
+                                ),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Color(0xff802c6e),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    fixedSize: Size(100, 15),
+                                  ),
+                                  onPressed: () {
+                                    // Tambahkan aksi yang sesuai ketika "Yes" ditekan
+                                    // Misalnya, menghapus produk
+                                  },
+                                  child: Text(
+                                    'Yes',
+                                    style: TextStyle(
+                                      fontFamily: 'Poppins Regular',
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
                         ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
               );
             },
             backgroundColor: Colors.red,
             child: Icon(Icons.delete),
-          ),
+          )
         ],
       ),
     );
