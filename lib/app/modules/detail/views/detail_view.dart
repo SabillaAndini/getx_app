@@ -39,124 +39,134 @@ class _DetailViewState extends State<DetailView> {
       ),
       body: Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 10),
-            Container(
-              width: 350,
-              height: 200,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Colors.white,
-                boxShadow: const [
-                  BoxShadow(
-                    blurRadius: 2,
-                    color: Color.fromARGB(255, 150, 144, 144),
+            Padding(padding: EdgeInsets.only(top: 15)),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                width: 340,
+                height: 210,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.50),
+                      blurRadius: 4,
+                      offset: Offset(0, 4),
+                    )
+                  ],
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(top: 5, bottom: 5),
+                  child: Image.asset(
+                    widget.sabilla.image ?? '',
+                    fit: BoxFit.fitHeight,
                   ),
-                ],
-              ),
-              child: Image.asset(
-                widget.sabilla.image ?? "",
-                width: 400,
-                height: 400,
-                scale: 5,
+                ),
               ),
             ),
             SizedBox(height: 10),
-            Container(
-              width: 390,
-              height: 48,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        widget.sabilla.title ?? "",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontFamily: 'Poppins',
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: 75),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          widget.sabilla.title ?? "",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontFamily: 'Poppins',
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      for (int i = 0; i < 4; i++)
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        for (int i = 0; i < 4; i++)
+                          Icon(
+                            Icons.star,
+                            color: Colors.yellow,
+                            size: 14,
+                          ),
                         Icon(
                           Icons.star,
-                          color: Colors.yellow,
+                          color: Colors.grey,
                           size: 14,
                         ),
-                      Icon(
-                        Icons.star,
-                        color: Colors.grey,
-                        size: 14,
-                      ),
-                      Text(
-                        '4.5',
-                        style: TextStyle(
-                          fontSize: 12,
+                        Text(
+                          '${widget.sabilla.rating?.rate}',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        Container(
+                          width: 1,
+                          height: 14,
                           color: Colors.grey,
                         ),
-                      ),
-                      SizedBox(width: 8),
-                      Container(
-                        width: 1,
-                        height: 14,
-                        color: Colors.grey,
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Text(
-                        '256',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey,
+                        SizedBox(
+                          width: 8,
                         ),
-                      ),
-                    ],
+                        Text(
+                          '${widget.sabilla.rating?.count}',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: 75),
+                child: Text(
+                  '\$${widget.sabilla.price ?? ""}',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black,
+                    fontFamily: 'Poppins',
                   ),
-                ],
-              ),
-            ),
-            Container(
-              width: 54,
-              height: 21,
-              child: Text(
-                '\$${widget.sabilla.price ?? ""}',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.black,
-                  fontFamily: 'Poppins',
                 ),
               ),
             ),
-            Container(
-              width: 93,
-              height: 18,
-              child: Text(
-                'Product Details',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.black,
-                  fontFamily: 'Poppins',
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: 75),
+                child: Text(
+                  'Product Details',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.black,
+                    fontFamily: 'Poppins',
+                  ),
                 ),
               ),
             ),
-            Container(
-              width: 390,
-              height: 30,
-              child: Text(
-                widget.sabilla.description ?? "",
-                style: TextStyle(
-                  fontSize: 10,
-                  color: Colors.black,
-                  fontFamily: 'Poppins',
-                  height: 1.5,
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: 75),
+                child: Text(
+                  widget.sabilla.description ?? "",
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: Colors.black,
+                    fontFamily: 'Poppins',
+                    height: 1.5,
+                  ),
                 ),
               ),
             ),
@@ -294,7 +304,7 @@ class _DetailViewState extends State<DetailView> {
               );
             },
             backgroundColor: Colors.red,
-            child: Icon(Icons.delete),
+            child: Icon(Icons.delete_forever),
           )
         ],
       ),

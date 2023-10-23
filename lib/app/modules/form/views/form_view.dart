@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
 import '../controllers/form_controller.dart';
 
@@ -9,6 +11,19 @@ class FormView extends StatefulWidget {
 }
 
 class _FormViewState extends State<FormView> {
+  File? image;
+  String billa = '';
+  XFile? imagePicked;
+  final ImagePicker picker = ImagePicker();
+
+  Future getImage() async {
+    setState(() async {
+      imagePicked = await picker.pickImage(source: ImageSource.gallery);
+      image = File(imagePicked!.path);
+      if (imagePicked != null) billa = imagePicked!.path;
+    });
+  }
+
   final FormController formController = Get.put(FormController());
   final TextEditingController productNameController = TextEditingController();
   final TextEditingController productCategoryController =
@@ -16,6 +31,10 @@ class _FormViewState extends State<FormView> {
   final TextEditingController productPriceController = TextEditingController();
   final TextEditingController productDescriptionController =
       TextEditingController();
+  String?
+      selectedCategory; // Buat variabel untuk menyimpan kategori yang dipilih.
+  List<String> categories = ['T-shirt', 'Tote Bag', 'Sweater', 'Shoes'];
+  // Default value can be empty string or any initial value
 
   @override
   Widget build(BuildContext context) {
@@ -47,29 +66,33 @@ class _FormViewState extends State<FormView> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 10),
-            Container(
-              width: 300,
-              height: 200,
-              margin: EdgeInsets.only(top: 10),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Colors.white,
-                boxShadow: const [
-                  BoxShadow(
-                    blurRadius: 2,
-                    color: Color(0xFFDDDEDE),
+            billa != ''
+                ? Container(
+                    height: 100, width: 100, child: Image.file(File(billa)))
+                :
+                // SizedBox(height: 10),
+                Container(
+                    width: 300,
+                    height: 200,
+                    margin: EdgeInsets.only(top: 10),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.white,
+                      boxShadow: const [
+                        BoxShadow(
+                          blurRadius: 2,
+                          color: Color(0xFFDDDEDE),
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: Image.asset(
+                        'assets/formimage.png',
+                        scale: 5,
+                      ),
+                    ),
                   ),
-                ],
-              ),
-              child: Center(
-                child: Image.asset(
-                  'assets/formimage.png',
-                  scale: 5,
-                ),
-              ),
-            ),
             SizedBox(height: 16),
             Container(
               width: 150,
@@ -81,7 +104,11 @@ class _FormViewState extends State<FormView> {
                 borderRadius: BorderRadius.circular(30),
               ),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () async {
+                  setState(() async {
+                    await getImage();
+                  });
+                },
                 style: TextButton.styleFrom(
                   primary: const Color(0xFF802c6e),
                 ),
@@ -131,10 +158,28 @@ class _FormViewState extends State<FormView> {
                       TextField(
                         controller: productCategoryController,
                         decoration: InputDecoration(
-                          suffixIcon: Icon(Icons.arrow_drop_down_rounded),
                           labelText: 'Category',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
+                          ),
+                          suffixIcon: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              value: selectedCategory,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  // Update the selected category.
+                                  productCategoryController.text = newValue ??
+                                      ''; // Update the TextFormField text.
+                                });
+                              },
+                              items: categories.map<DropdownMenuItem<String>>(
+                                  (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
                           ),
                         ),
                       ),

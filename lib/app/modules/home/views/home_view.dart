@@ -222,6 +222,7 @@ class HomeView extends GetView<HomeController> {
                 ),
                 onPressed: () {
                   controller.addProduct("New Product");
+                  Get.toNamed(Routes.FORM);
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
