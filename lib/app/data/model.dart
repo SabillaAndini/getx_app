@@ -1,5 +1,5 @@
 class Product {
-  int? id;
+  String? id;
   String? title;
   double? price;
   String? description;
@@ -16,6 +16,28 @@ class Product {
     this.image,
     this.rating,
   });
+
+  Product fromJson(Map<String, dynamic> json) {
+    return Product(
+        id: json['id'],
+        title: json['title'],
+        price: json['price'].toDouble(),
+        description: json['description'],
+        category: json['category'],
+        image: json['image'],
+        rating: Rating().fromJson(json['rating']));
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'price': price,
+      'description': description,
+      'category': category,
+      'image': image,
+    };
+  }
 }
 
 class Rating {
@@ -26,4 +48,11 @@ class Rating {
     this.rate,
     this.count,
   });
+
+  Rating fromJson(Map<String, dynamic> json) {
+    return Rating(
+      rate: json['rate'],
+      count: json['count'],
+    );
+  }
 }

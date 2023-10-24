@@ -1,6 +1,9 @@
 import 'package:get/get.dart';
+import 'package:getx_app/app/data/service_api.dart';
 
 class HomeController extends GetxController {
+  final ServiceApi serviceApi = ServiceApi();
+
   var products = <Product>[].obs;
 
   final count = 0.obs;
@@ -24,7 +27,7 @@ class HomeController extends GetxController {
         title: 'Tote Bag Seventeen',
         price: 10.5,
         description: 'Spacious and durable tote bag',
-        category: 'Category Tote Bag',
+        category: 'Tote Bag',
         image: 'assets/item2.png',
         rating: Rating(rate: 4.3, count: 300),
       ),
@@ -33,7 +36,7 @@ class HomeController extends GetxController {
         title: 'ADIOLI Men Sweater',
         price: 75.39,
         description: 'Warm and trendy sweater',
-        category: 'Category Sweater',
+        category: 'Sweater',
         image: 'assets/item3.png',
         rating: Rating(rate: 4.9, count: 350),
       ),
@@ -42,7 +45,7 @@ class HomeController extends GetxController {
         title: 'Nike futura washed h86 cap',
         price: 49.99,
         description: 'Sporty cap for outdoor activities',
-        category: 'Category Cap',
+        category: 'accessories',
         image: 'assets/item4.png',
         rating: Rating(rate: 4.6, count: 200),
       ),
@@ -51,7 +54,7 @@ class HomeController extends GetxController {
         title: 'Converse',
         price: 90.9,
         description: 'Classic canvas sneakers',
-        category: 'Category Shoes',
+        category: 'Shoes',
         image: 'assets/item5.png',
         rating: Rating(rate: 4.7, count: 700),
       ),
@@ -60,7 +63,7 @@ class HomeController extends GetxController {
         title: 'Women Marhen.j Canvas Tote Bag',
         price: 70.5,
         description: 'Elegant and roomy tote bag',
-        category: 'Category Tote Bag',
+        category: 'Tote Bag',
         image: 'assets/item6.png',
         rating: Rating(rate: 4.9, count: 378),
       ),
@@ -80,6 +83,8 @@ class HomeController extends GetxController {
   void increment() => count.value++;
 
   void addProduct(String s) {}
+
+  loadProduct() {}
 }
 
 class Product {

@@ -59,7 +59,7 @@ class _DetailViewState extends State<DetailView> {
                 ),
                 child: Padding(
                   padding: EdgeInsets.only(top: 5, bottom: 5),
-                  child: Image.asset(
+                  child: Image.network(
                     widget.sabilla.image ?? '',
                     fit: BoxFit.fitHeight,
                   ),

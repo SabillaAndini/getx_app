@@ -5,6 +5,7 @@ import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   final HomeController homeController = Get.put(HomeController());
+  Product product = Get.arguments ?? Product();
 
   @override
   Widget build(BuildContext context) {
@@ -103,109 +104,123 @@ class HomeView extends GetView<HomeController> {
             ),
           ),
           Expanded(
-            child: GridView.builder(
-              key: UniqueKey(),
-              padding: EdgeInsets.all(20),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-                crossAxisCount: 2,
-              ),
-              itemCount: 6,
-              itemBuilder: (context, index) {
-                final product = homeController.products[index];
+            child: FutureBuilder(
+              future: controller.loadProduct(),
+              builder: (context, snapshot) => (snapshot.connectionState ==
+                      ConnectionState.waiting)
+                  ? Center(child: CircularProgressIndicator())
+                  : Container(
+                      height: Get.height * 0.8,
+                      child: GridView.builder(
+                        key: UniqueKey(),
+                        padding: EdgeInsets.all(20),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 20,
+                          crossAxisCount: 2,
+                        ),
+                        itemCount: homeController.products.value.length,
+                        itemBuilder: (context, index) {
+                          final product = homeController.products[index];
 
-                return GestureDetector(
-                  onTap: () => Get.toNamed(Routes.DETAIL, arguments: product),
-                  child: Container(
-                    // Tinggi Container ditingkatkan untuk membuatnya lebih panjang
-                    height: 400, // Ubah tinggi sesuai dengan kebutuhan Anda
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey,
-                          blurRadius: 4,
-                          spreadRadius: 1,
-                          offset: Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5),
-                          child: Image.asset(
-                            product.image ?? "",
-                            width: 100,
-                            height: 125,
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 7, left: 7),
-                          child: Text(
-                            product.title ?? '',
-                            style: TextStyle(
-                              overflow: TextOverflow.ellipsis,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
-                            maxLines: 1,
-                          ),
-                        ),
-                        SizedBox(height: 6),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 7, left: 7),
-                          child: Text(
-                            product.description ?? "",
-                            style: TextStyle(
-                              overflow: TextOverflow.ellipsis,
-                              fontSize: 13,
-                            ),
-                            maxLines: 2,
-                          ),
-                        ),
-                        SizedBox(height: 6),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 7, right: 7),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '\$${(product.price ?? 0).toStringAsFixed(2)}',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Icon(
-                                    Icons.star,
-                                    color: Colors.yellow,
-                                    size: 16,
+                          return GestureDetector(
+                            onTap: () =>
+                                Get.toNamed(Routes.DETAIL, arguments: product),
+                            child: Container(
+                              height: 400,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey,
+                                    blurRadius: 4,
+                                    spreadRadius: 1,
+                                    offset: Offset(0, 4),
                                   ),
-                                  Text(
-                                    '${homeController.products[index].rating?.rate.toString()}',
-                                    style: TextStyle(
-                                      color: Colors.black,
+                                ],
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 5),
+                                    child: Image.network(
+                                      product.image ?? "",
+                                      width: 100,
+                                      height: 125,
+                                    ),
+                                  ),
+                                  SizedBox(height: 5),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 7, left: 7),
+                                    child: Text(
+                                      product.title ?? '',
+                                      style: TextStyle(
+                                        overflow: TextOverflow.ellipsis,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                      ),
+                                      maxLines: 1,
+                                    ),
+                                  ),
+                                  SizedBox(height: 6),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 7, left: 7),
+                                    child: Text(
+                                      product.description ?? "",
+                                      style: TextStyle(
+                                        overflow: TextOverflow.ellipsis,
+                                        fontSize: 13,
+                                      ),
+                                      maxLines: 2,
+                                    ),
+                                  ),
+                                  SizedBox(height: 6),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 7, right: 7),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          '\$${(product.price ?? 0).toStringAsFixed(2)}',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Icon(
+                                              Icons.star,
+                                              color: Colors.yellow,
+                                              size: 16,
+                                            ),
+                                            Text(
+                                              '${product.rating?.rate.toString()}',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
-                        ),
-                      ],
+                            ),
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                );
-              },
             ),
           ),
           Align(
