@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_app/app/modules/home/controllers/home_controller.dart';
+import 'package:getx_app/app/data/model.dart';
+import 'package:getx_app/app/modules/detail/controllers/detail_controller.dart';
+
+import '../../../routes/app_pages.dart';
 
 class DetailView extends StatefulWidget {
   DetailView({Key? key}) : super(key: key);
-  Product sabilla = Get.arguments ?? Product();
+
+  Product product = Get.arguments ?? Product();
   @override
   State<DetailView> createState() => _DetailViewState();
 }
@@ -60,7 +64,7 @@ class _DetailViewState extends State<DetailView> {
                 child: Padding(
                   padding: EdgeInsets.only(top: 5, bottom: 5),
                   child: Image.network(
-                    widget.sabilla.image ?? '',
+                    widget.product.image ?? '',
                     fit: BoxFit.fitHeight,
                   ),
                 ),
@@ -76,8 +80,8 @@ class _DetailViewState extends State<DetailView> {
                     Row(
                       children: [
                         Text(
-                          widget.sabilla.title ?? "",
-                          style: TextStyle(
+                          widget.product.title ?? "",
+                          style: const TextStyle(
                             fontSize: 16,
                             color: Colors.black,
                             fontFamily: 'Poppins',
@@ -88,19 +92,19 @@ class _DetailViewState extends State<DetailView> {
                     Row(
                       children: [
                         for (int i = 0; i < 4; i++)
-                          Icon(
+                          const Icon(
                             Icons.star,
                             color: Colors.yellow,
                             size: 14,
                           ),
-                        Icon(
+                        const Icon(
                           Icons.star,
                           color: Colors.grey,
                           size: 14,
                         ),
                         Text(
-                          '${widget.sabilla.rating?.rate}',
-                          style: TextStyle(
+                          '${widget.product.rating?.rate}',
+                          style: const TextStyle(
                             fontSize: 12,
                             color: Colors.grey,
                           ),
@@ -111,12 +115,12 @@ class _DetailViewState extends State<DetailView> {
                           height: 14,
                           color: Colors.grey,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 8,
                         ),
                         Text(
-                          '${widget.sabilla.rating?.count}',
-                          style: TextStyle(
+                          '${widget.product.rating?.count}',
+                          style: const TextStyle(
                             fontSize: 12,
                             color: Colors.grey,
                           ),
@@ -130,10 +134,10 @@ class _DetailViewState extends State<DetailView> {
             Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: EdgeInsets.only(left: 75),
+                padding: const EdgeInsets.only(left: 75),
                 child: Text(
-                  '\$${widget.sabilla.price ?? ""}',
-                  style: TextStyle(
+                  '\$${widget.product.price ?? ""}',
+                  style: const TextStyle(
                     fontSize: 14,
                     color: Colors.black,
                     fontFamily: 'Poppins',
@@ -141,7 +145,7 @@ class _DetailViewState extends State<DetailView> {
                 ),
               ),
             ),
-            Align(
+            const Align(
               alignment: Alignment.centerLeft,
               child: Padding(
                 padding: EdgeInsets.only(left: 75),
@@ -158,10 +162,10 @@ class _DetailViewState extends State<DetailView> {
             Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: EdgeInsets.only(left: 75),
+                padding: const EdgeInsets.only(left: 75),
                 child: Text(
-                  widget.sabilla.description ?? "",
-                  style: TextStyle(
+                  widget.product.description ?? "",
+                  style: const TextStyle(
                     fontSize: 10,
                     color: Colors.black,
                     fontFamily: 'Poppins',
@@ -179,12 +183,13 @@ class _DetailViewState extends State<DetailView> {
         children: [
           FloatingActionButton(
             onPressed: () {
-              // Tambahkan aksi untuk tombol Edit
+              Get.toNamed(Routes.FORM, arguments: widget.product);
             },
+
             backgroundColor: Colors.yellow, // Ganti warna sesuai kebutuhan
-            child: Icon(Icons.edit),
+            child: const Icon(Icons.edit),
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ), // Jarak vertikal antara tombol Edit dan tombol Delete
           FloatingActionButton(
@@ -200,7 +205,7 @@ class _DetailViewState extends State<DetailView> {
                         Container(
                           width: double.infinity,
                           height: 110,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: Color(0xffF2D2EB),
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(15),
@@ -211,11 +216,10 @@ class _DetailViewState extends State<DetailView> {
                         Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Align(
+                            const Align(
                               alignment: Alignment.center,
                               child: Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 5, bottom: 10),
+                                padding: EdgeInsets.only(top: 5, bottom: 10),
                                 child: Icon(
                                   Icons
                                       .help_outline, // Ganti dengan ikon "help_outline"
@@ -224,10 +228,10 @@ class _DetailViewState extends State<DetailView> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 17),
+                            const SizedBox(height: 17),
                             Container(
                               padding: EdgeInsets.only(left: 30, right: 30),
-                              child: Text(
+                              child: const Text(
                                 'Are you sure?',
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
@@ -279,11 +283,13 @@ class _DetailViewState extends State<DetailView> {
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20),
                                     ),
-                                    fixedSize: Size(100, 15),
+                                    minimumSize: Size(100,
+                                        40), // Atur ukuran minimum yang sesuai
                                   ),
                                   onPressed: () {
-                                    // Tambahkan aksi yang sesuai ketika "Yes" ditekan
-                                    // Misalnya, menghapus produk
+                                    DetailController controller =
+                                        Get.find<DetailController>();
+                                    controller.deleteProduct(widget.product);
                                   },
                                   child: Text(
                                     'Yes',
@@ -292,7 +298,7 @@ class _DetailViewState extends State<DetailView> {
                                       color: Colors.white,
                                     ),
                                   ),
-                                ),
+                                )
                               ],
                             )
                           ],

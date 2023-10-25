@@ -23,7 +23,7 @@ class FormController extends GetxController {
   modelToController(Product product) {
     productNameController.text = product.title ?? '';
     productCategoryController.text = product.category ?? '';
-    productPriceController.text = (product.price ?? 0.0).toStringAsFixed(2);
+    productPriceController.text = (product.price ?? '').toString();
     productDescriptionController.text = product.description ?? '';
   }
 

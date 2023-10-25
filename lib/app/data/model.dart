@@ -1,5 +1,5 @@
 class Product {
-  String? id;
+  int? id;
   String? title;
   double? price;
   String? description;
@@ -45,14 +45,20 @@ class Rating {
   int? count;
 
   Rating({
-    this.rate,
     this.count,
+    this.rate,
   });
-
   Rating fromJson(Map<String, dynamic> json) {
     return Rating(
       rate: json['rate'],
       count: json['count'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'rate': rate,
+      'count': count,
+    };
   }
 }

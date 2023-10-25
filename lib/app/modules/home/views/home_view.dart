@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_app/app/routes/app_pages.dart';
 import '../controllers/home_controller.dart';
+import 'package:getx_app/app/data/model.dart';
 
 class HomeView extends GetView<HomeController> {
   final HomeController homeController = Get.put(HomeController());
@@ -114,10 +115,12 @@ class HomeView extends GetView<HomeController> {
                       child: GridView.builder(
                         key: UniqueKey(),
                         padding: EdgeInsets.all(20),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisSpacing: 20,
-                          mainAxisSpacing: 20,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 6.5 / 9,
                           crossAxisCount: 2,
+                          crossAxisSpacing: 5.0,
+                          mainAxisSpacing: 5.0,
                         ),
                         itemCount: homeController.products.value.length,
                         itemBuilder: (context, index) {
@@ -128,7 +131,7 @@ class HomeView extends GetView<HomeController> {
                                 Get.toNamed(Routes.DETAIL, arguments: product),
                             child: Container(
                               height: 400,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Colors.white,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20)),
@@ -147,7 +150,7 @@ class HomeView extends GetView<HomeController> {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(top: 5),
-                                    child: Image.network(
+                                    child: Image.asset(
                                       product.image ?? "",
                                       width: 100,
                                       height: 125,

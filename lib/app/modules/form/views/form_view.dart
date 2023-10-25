@@ -1,7 +1,6 @@
 import 'dart:io';
-
+import 'package:getx_app/app/data/model.dart';
 import 'package:flutter/material.dart';
-import 'package:getx_app/app/modules/home/controllers/home_controller.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
 import '../controllers/form_controller.dart';
@@ -45,10 +44,10 @@ class _FormViewState extends State<FormView> {
     'Shoes',
     'accessories'
   ];
-  // Default value can be empty string or any initial value
 
   @override
   Widget build(BuildContext context) {
+    formController.modelToController(product);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -126,14 +125,14 @@ class _FormViewState extends State<FormView> {
                   style: TextButton.styleFrom(
                     primary: const Color(0xFF802c6e),
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(width: 8), // Spasi antara ikon dan teks
                       Text('Upload Image'),
                       Icon(
                         Icons.photo,
-                        color: const Color(0xFF802c6e),
+                        color: Color(0xFF802c6e),
                       ),
                     ],
                   ),
@@ -160,7 +159,7 @@ class _FormViewState extends State<FormView> {
                     child: Column(
                       children: [
                         TextFormField(
-                          controller: productNameController,
+                          controller: formController.productNameController,
                           validator: (value) => value == null || value == ''
                               ? 'This field is required'
                               : null,
@@ -173,7 +172,7 @@ class _FormViewState extends State<FormView> {
                         ),
                         SizedBox(height: 16),
                         TextFormField(
-                          controller: productCategoryController,
+                          controller: formController.productCategoryController,
                           validator: (value) => value == null || value == ''
                               ? 'This field is required'
                               : null,
@@ -188,8 +187,10 @@ class _FormViewState extends State<FormView> {
                                 onChanged: (String? newValue) {
                                   setState(() {
                                     // Update the selected category.
-                                    productCategoryController.text = newValue ??
-                                        ''; // Update the TextFormField text.
+                                    formController
+                                            .productCategoryController.text =
+                                        newValue ??
+                                            ''; // Update the TextFormField text.
                                   });
                                 },
                                 items: categories.map<DropdownMenuItem<String>>(
@@ -205,7 +206,7 @@ class _FormViewState extends State<FormView> {
                         ),
                         SizedBox(height: 16),
                         TextFormField(
-                          controller: productPriceController,
+                          controller: formController.productPriceController,
                           validator: (value) => value == null || value == ''
                               ? 'This field is required'
                               : double.tryParse(value) == false
@@ -221,7 +222,8 @@ class _FormViewState extends State<FormView> {
                         ),
                         SizedBox(height: 16),
                         TextFormField(
-                          controller: productDescriptionController,
+                          controller:
+                              formController.productDescriptionController,
                           validator: (value) => value == null || value == ''
                               ? 'This field is required'
                               : null,
@@ -239,17 +241,22 @@ class _FormViewState extends State<FormView> {
               ),
               SizedBox(height: 16),
               ElevatedButton(
-                onPressed: () async {},
+                onPressed: () async {
+                  formKey.currentState?.validate() == true
+                      ? await formController.storeProduct(
+                          product, (product.id != null) ? true : false)
+                      : Get.snackbar('Error', 'Data tidak valid');
+                },
                 style: ElevatedButton.styleFrom(
                   primary: Color(0xFF802c6e),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
                   padding: EdgeInsets.all(10),
-                  maximumSize: Size(300,
+                  maximumSize: const Size(300,
                       70), // Sesuaikan dengan lebar dan tinggi yang Anda butuhkan
                 ),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
