@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_app/app/data/model.dart';
 import 'package:getx_app/app/modules/detail/controllers/detail_controller.dart';
-
 import '../../../routes/app_pages.dart';
 
 class DetailView extends StatefulWidget {
@@ -33,9 +32,9 @@ class _DetailViewState extends State<DetailView> {
             const Text(
               'Fake Store',
               style: TextStyle(
-                color: Color(0xFF802c6e),
-                fontWeight: FontWeight.bold,
-              ),
+                  color: Color.fromARGB(255, 128, 44, 110),
+                  fontFamily: 'Poppins Bold',
+                  fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -44,7 +43,7 @@ class _DetailViewState extends State<DetailView> {
       body: Center(
         child: Column(
           children: [
-            Padding(padding: EdgeInsets.only(top: 15)),
+            const Padding(padding: EdgeInsets.only(top: 15)),
             Align(
               alignment: Alignment.topCenter,
               child: Container(
@@ -57,12 +56,12 @@ class _DetailViewState extends State<DetailView> {
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.50),
                       blurRadius: 4,
-                      offset: Offset(0, 4),
+                      offset: const Offset(0, 4),
                     )
                   ],
                 ),
                 child: Padding(
-                  padding: EdgeInsets.only(top: 5, bottom: 5),
+                  padding: const EdgeInsets.only(top: 5, bottom: 5),
                   child: Image.network(
                     widget.product.image ?? '',
                     fit: BoxFit.fitHeight,
@@ -70,46 +69,50 @@ class _DetailViewState extends State<DetailView> {
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: EdgeInsets.only(left: 75),
+                padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Column(
                   children: [
                     Row(
                       children: [
-                        Text(
-                          widget.product.title ?? "",
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontFamily: 'Poppins',
+                        Expanded(
+                          child: Text(
+                            widget.product.title ?? "",
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontFamily: 'Poppins',
+                            ),
+                            maxLines: 2, // Maksimum 2 baris
+                            overflow: TextOverflow
+                                .ellipsis, // Menggunakan tanda elipsis jika terlalu panjang
                           ),
                         ),
                       ],
                     ),
                     Row(
                       children: [
-                        for (int i = 0; i < 4; i++)
-                          const Icon(
+                        for (var i = 0; i < 5; i++)
+                          Icon(
                             Icons.star,
-                            color: Colors.yellow,
-                            size: 14,
+                            color:
+                                i < ((widget.product.rating?.rate ?? 0).round())
+                                    ? const Color.fromARGB(255, 255, 217, 0)
+                                    : Colors.grey,
+                            size: 17,
                           ),
-                        const Icon(
-                          Icons.star,
-                          color: Colors.grey,
-                          size: 14,
-                        ),
+                        const SizedBox(width: 8),
                         Text(
                           '${widget.product.rating?.rate}',
                           style: const TextStyle(
-                            fontSize: 12,
+                            fontSize: 14,
                             color: Colors.grey,
                           ),
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Container(
                           width: 1,
                           height: 14,
@@ -121,7 +124,7 @@ class _DetailViewState extends State<DetailView> {
                         Text(
                           '${widget.product.rating?.count}',
                           style: const TextStyle(
-                            fontSize: 12,
+                            fontSize: 14,
                             color: Colors.grey,
                           ),
                         ),
@@ -131,10 +134,11 @@ class _DetailViewState extends State<DetailView> {
                 ),
               ),
             ),
+            const SizedBox(height: 10),
             Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: const EdgeInsets.only(left: 75),
+                padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Text(
                   '\$${widget.product.price ?? ""}',
                   style: const TextStyle(
@@ -145,10 +149,11 @@ class _DetailViewState extends State<DetailView> {
                 ),
               ),
             ),
+            const SizedBox(height: 10),
             const Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: EdgeInsets.only(left: 75),
+                padding: EdgeInsets.only(left: 20, right: 20),
                 child: Text(
                   'Product Details',
                   style: TextStyle(
@@ -159,10 +164,11 @@ class _DetailViewState extends State<DetailView> {
                 ),
               ),
             ),
+            const SizedBox(height: 10),
             Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: const EdgeInsets.only(left: 75),
+                padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Text(
                   widget.product.description ?? "",
                   style: const TextStyle(
@@ -171,6 +177,38 @@ class _DetailViewState extends State<DetailView> {
                     fontFamily: 'Poppins',
                     height: 1.5,
                   ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            //category
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                margin: EdgeInsets.only(left: 20),
+                width: 100,
+                height: 30,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: Color(0xff802c6e)),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const Icon(
+                      Icons.sell_rounded,
+                      color: Color(0xff802c6e),
+                      size: 10,
+                    ),
+                    Text(
+                      '${widget.product.category ?? ""}',
+                      style: TextStyle(
+                        fontFamily: 'Poppins Regular',
+                        color: Color(0xff802c6e),
+                        fontSize: 10,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -230,7 +268,8 @@ class _DetailViewState extends State<DetailView> {
                             ),
                             const SizedBox(height: 17),
                             Container(
-                              padding: EdgeInsets.only(left: 30, right: 30),
+                              padding:
+                                  const EdgeInsets.only(left: 30, right: 30),
                               child: const Text(
                                 'Are you sure?',
                                 style: TextStyle(
@@ -240,10 +279,11 @@ class _DetailViewState extends State<DetailView> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Container(
-                              padding: EdgeInsets.only(left: 30, right: 30),
-                              child: Text(
+                              padding:
+                                  const EdgeInsets.only(left: 30, right: 30),
+                              child: const Text(
                                 'Do you really want to delete this product? You will not be able to undo this action!',
                                 style: TextStyle(
                                   fontFamily: 'Poppins Regular',
@@ -258,18 +298,18 @@ class _DetailViewState extends State<DetailView> {
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.white,
-                                    side: BorderSide(
+                                    side: const BorderSide(
                                       color: Color(0xff802c6e),
                                     ),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20),
                                     ),
-                                    fixedSize: Size(100, 15),
+                                    fixedSize: const Size(100, 15),
                                   ),
                                   onPressed: () {
                                     Get.back();
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     'No',
                                     style: TextStyle(
                                       fontFamily: 'Poppins Regular',
@@ -279,11 +319,11 @@ class _DetailViewState extends State<DetailView> {
                                 ),
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Color(0xff802c6e),
+                                    backgroundColor: const Color(0xff802c6e),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20),
                                     ),
-                                    minimumSize: Size(100,
+                                    minimumSize: const Size(100,
                                         40), // Atur ukuran minimum yang sesuai
                                   ),
                                   onPressed: () {
@@ -291,7 +331,7 @@ class _DetailViewState extends State<DetailView> {
                                         Get.find<DetailController>();
                                     controller.deleteProduct(widget.product);
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     'Yes',
                                     style: TextStyle(
                                       fontFamily: 'Poppins Regular',
@@ -310,7 +350,7 @@ class _DetailViewState extends State<DetailView> {
               );
             },
             backgroundColor: Colors.red,
-            child: Icon(Icons.delete_forever),
+            child: const Icon(Icons.delete_forever),
           )
         ],
       ),

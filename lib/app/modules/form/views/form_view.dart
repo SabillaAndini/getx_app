@@ -37,12 +37,11 @@ class _FormViewState extends State<FormView> {
       TextEditingController();
   String?
       selectedCategory; // Buat variabel untuk menyimpan kategori yang dipilih.
-  List<String> categories = [
-    'T-shirt',
-    'Tote Bag',
-    'Sweater',
-    'Shoes',
-    'accessories'
+  final items = [
+    'electronics',
+    'jewelery',
+    "men's clothing",
+    "women's clothing",
   ];
 
   @override
@@ -65,9 +64,9 @@ class _FormViewState extends State<FormView> {
             const Text(
               'Fake Store',
               style: TextStyle(
-                color: Color(0xFF802c6e), // Warna teks ungu dengan kode hex
-                fontWeight: FontWeight.bold, // Mengatur teks menjadi bold
-              ),
+                  color: Color.fromARGB(255, 128, 44, 110),
+                  fontFamily: 'Poppins Bold',
+                  fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -82,14 +81,14 @@ class _FormViewState extends State<FormView> {
                   ? Container(
                       height: 100,
                       width: 100,
-                      child: Image.file(File(billa)),
+                      child: Image.file(File(billa), fit: BoxFit.contain),
                     )
                   :
                   // SizedBox(height: 10),
                   Container(
                       width: 300,
                       height: 200,
-                      margin: EdgeInsets.only(top: 10),
+                      margin: const EdgeInsets.only(top: 10),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
@@ -108,7 +107,7 @@ class _FormViewState extends State<FormView> {
                         ),
                       ),
                     ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Container(
                 width: 150,
                 decoration: BoxDecoration(
@@ -166,20 +165,36 @@ class _FormViewState extends State<FormView> {
                           decoration: InputDecoration(
                             labelText: 'Product Name',
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(10),
                             ),
                           ),
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         TextFormField(
                           controller: formController.productCategoryController,
                           validator: (value) => value == null || value == ''
                               ? 'This field is required'
                               : null,
+                          style: const TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 15,
+                              color: Color(0xff802c6e)),
                           decoration: InputDecoration(
-                            labelText: 'Category',
+                            hintText: 'Category',
+                            hintStyle: const TextStyle(
+                              fontFamily: 'Poppins',
+                            ),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                color: Color(0xfff5f5f5),
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                color: Color(0xff802c6e),
+                              ),
                             ),
                             suffixIcon: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
@@ -193,7 +208,7 @@ class _FormViewState extends State<FormView> {
                                             ''; // Update the TextFormField text.
                                   });
                                 },
-                                items: categories.map<DropdownMenuItem<String>>(
+                                items: items.map<DropdownMenuItem<String>>(
                                     (String value) {
                                   return DropdownMenuItem<String>(
                                     value: value,
@@ -204,7 +219,7 @@ class _FormViewState extends State<FormView> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         TextFormField(
                           controller: formController.productPriceController,
                           validator: (value) => value == null || value == ''
@@ -215,12 +230,12 @@ class _FormViewState extends State<FormView> {
                           decoration: InputDecoration(
                             labelText: 'Price',
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(10),
                             ),
                             //keyboardType: TextInputType.number,
                           ),
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         TextFormField(
                           controller:
                               formController.productDescriptionController,
@@ -230,7 +245,7 @@ class _FormViewState extends State<FormView> {
                           decoration: InputDecoration(
                             labelText: 'Description',
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(10),
                             ),
                           ),
                         ),
@@ -239,7 +254,7 @@ class _FormViewState extends State<FormView> {
                   ),
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () async {
                   formKey.currentState?.validate() == true
@@ -248,7 +263,7 @@ class _FormViewState extends State<FormView> {
                       : Get.snackbar('Error', 'Data tidak valid');
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF802c6e),
+                  primary: const Color(0xFF802c6e),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
@@ -274,7 +289,7 @@ class _FormViewState extends State<FormView> {
                   ],
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
             ],
           ),
         ),
