@@ -29,20 +29,6 @@ class _FormViewState extends State<FormView> {
   }
 
   final FormController formController = Get.put(FormController());
-  final TextEditingController productNameController = TextEditingController();
-  final TextEditingController productCategoryController =
-      TextEditingController();
-  final TextEditingController productPriceController = TextEditingController();
-  final TextEditingController productDescriptionController =
-      TextEditingController();
-  String?
-      selectedCategory; // Buat variabel untuk menyimpan kategori yang dipilih.
-  final items = [
-    'electronics',
-    'jewelery',
-    "men's clothing",
-    "women's clothing",
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -77,36 +63,43 @@ class _FormViewState extends State<FormView> {
           key: formKey,
           child: Column(
             children: [
-              billa != ''
+              product.image != null
                   ? Container(
                       height: 100,
                       width: 100,
-                      child: Image.file(File(billa), fit: BoxFit.contain),
+                      child: Image.network(product.image ?? '',
+                          fit: BoxFit.contain),
                     )
-                  :
-                  // SizedBox(height: 10),
-                  Container(
-                      width: 300,
-                      height: 200,
-                      margin: const EdgeInsets.only(top: 10),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Colors.white,
-                        boxShadow: const [
-                          BoxShadow(
-                            blurRadius: 2,
-                            color: Color(0xFFDDDEDE),
+                  : billa != ''
+                      ? Container(
+                          height: 100,
+                          width: 100,
+                          child: Image.file(File(billa), fit: BoxFit.contain),
+                        )
+                      :
+                      // SizedBox(height: 10),
+                      Container(
+                          width: 300,
+                          height: 200,
+                          margin: const EdgeInsets.only(top: 10),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Colors.white,
+                            boxShadow: const [
+                              BoxShadow(
+                                blurRadius: 2,
+                                color: Color(0xFFDDDEDE),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Image.asset(
-                          'assets/formimage.png',
-                          scale: 5,
+                          child: Center(
+                            child: Image.asset(
+                              'assets/formimage.png',
+                              scale: 5,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
               const SizedBox(height: 16),
               Container(
                 width: 150,
@@ -162,6 +155,10 @@ class _FormViewState extends State<FormView> {
                           validator: (value) => value == null || value == ''
                               ? 'This field is required'
                               : null,
+                          style: const TextStyle(
+                              fontFamily: 'Poppins Light',
+                              fontSize: 15,
+                              color: Color(0xff802c6e)),
                           decoration: InputDecoration(
                             labelText: 'Product Name',
                             border: OutlineInputBorder(
@@ -170,55 +167,85 @@ class _FormViewState extends State<FormView> {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        TextFormField(
-                          controller: formController.productCategoryController,
-                          validator: (value) => value == null || value == ''
-                              ? 'This field is required'
-                              : null,
-                          style: const TextStyle(
-                              fontFamily: 'Poppins',
-                              fontSize: 15,
-                              color: Color(0xff802c6e)),
-                          decoration: InputDecoration(
-                            hintText: 'Category',
-                            hintStyle: const TextStyle(
-                              fontFamily: 'Poppins',
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: const BorderSide(
-                                color: Color(0xfff5f5f5),
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: const BorderSide(
-                                color: Color(0xff802c6e),
-                              ),
-                            ),
-                            suffixIcon: DropdownButtonHideUnderline(
-                              child: DropdownButton<String>(
-                                value: selectedCategory,
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    // Update the selected category.
-                                    formController
-                                            .productCategoryController.text =
-                                        newValue ??
-                                            ''; // Update the TextFormField text.
-                                  });
-                                },
-                                items: items.map<DropdownMenuItem<String>>(
-                                    (String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                          ),
+                        // TextFormField(
+                        //   controller: formController.productCategoryController,
+                        //   validator: (value) => value == null || value == ''
+                        //       ? 'This field is required'
+                        //       : null,
+                        //   style: const TextStyle(
+                        //       fontFamily: 'Poppins Light',
+                        //       fontSize: 15,
+                        //       color: Color(0xff802c6e)),
+                        //   decoration: InputDecoration(
+                        //     hintText: 'Category',
+                        //     hintStyle: const TextStyle(
+                        //       fontFamily: 'Poppins Light',
+                        //     ),
+                        //     border: OutlineInputBorder(
+                        //       borderRadius: BorderRadius.circular(10),
+                        //       borderSide: const BorderSide(
+                        //         color: Color(0xfff5f5f5),
+                        //       ),
+                        //     ),
+                        //     focusedBorder: OutlineInputBorder(
+                        //       borderRadius: BorderRadius.circular(10),
+                        //       borderSide: const BorderSide(
+                        //         color: Color(0xff802c6e),
+                        //       ),
+                        //     ),
+                        //     suffixIcon: DropdownButtonHideUnderline(
+                        //       child: DropdownButton<String>(
+                        //         onChanged: (String? newValue) {
+                        //           setState(() {
+                        //             // Update the selected category.
+                        //             formController
+                        //                     .productCategoryController.text =
+                        //                 newValue ??
+                        //                     ''; // Update the TextFormField text.
+                        //           });
+                        //         },
+                        //         items: items.map<DropdownMenuItem<String>>(
+                        //             (String value) {
+                        //           return DropdownMenuItem<String>(
+                        //             value: value,
+                        //             child: Text(value,
+                        //                 style: const TextStyle(
+                        //                     fontFamily: 'Poppins Light',
+                        //                     color: Color(0xff802c6e))),
+                        //           );
+                        //         }).toList(),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+
+                        DropdownButton<String>(
+                          value: formController.selectedCategory.isNotEmpty
+                              ? formController.selectedCategory
+                              : '',
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              // Update the selected category.
+                              formController.selectedCategory = newValue ??
+                                  ''; // Update the TextFormField text.
+                            });
+                          },
+                          items: [
+                            'electronics',
+                            'jewelery',
+                            "men's clothing",
+                            "women's clothing",
+                          ].map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value,
+                                  style: const TextStyle(
+                                      fontFamily: 'Poppins Light',
+                                      color: Color(0xff802c6e))),
+                            );
+                          }).toList(),
                         ),
+
                         const SizedBox(height: 16),
                         TextFormField(
                           controller: formController.productPriceController,
@@ -227,6 +254,10 @@ class _FormViewState extends State<FormView> {
                               : double.tryParse(value) == false
                                   ? 'Wrong Value'
                                   : null,
+                          style: const TextStyle(
+                              fontFamily: 'Poppins Light',
+                              fontSize: 15,
+                              color: Color(0xff802c6e)),
                           decoration: InputDecoration(
                             labelText: 'Price',
                             border: OutlineInputBorder(
@@ -242,6 +273,10 @@ class _FormViewState extends State<FormView> {
                           validator: (value) => value == null || value == ''
                               ? 'This field is required'
                               : null,
+                          style: const TextStyle(
+                              fontFamily: 'Poppins Light',
+                              fontSize: 15,
+                              color: Color(0xff802c6e)),
                           decoration: InputDecoration(
                             labelText: 'Description',
                             border: OutlineInputBorder(
@@ -267,7 +302,7 @@ class _FormViewState extends State<FormView> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   maximumSize: const Size(300,
                       70), // Sesuaikan dengan lebar dan tinggi yang Anda butuhkan
                 ),

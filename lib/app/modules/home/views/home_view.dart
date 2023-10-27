@@ -56,7 +56,6 @@ class HomeView extends GetView<HomeController> {
                       ),
                       labelText: 'Search Product',
                       labelStyle: const TextStyle(
-                        fontFamily: 'Poppins',
                         color: Colors.grey,
                       ),
                       suffixIcon: const Icon(Icons.search),
@@ -87,7 +86,6 @@ class HomeView extends GetView<HomeController> {
                       ),
                       labelText: 'Filter',
                       labelStyle: const TextStyle(
-                        fontFamily: 'Poppins',
                         color: Colors.grey,
                       ),
                       suffixIcon: const Icon(Icons.filter_alt_outlined),
@@ -169,7 +167,6 @@ class HomeView extends GetView<HomeController> {
                                       style: const TextStyle(
                                         overflow: TextOverflow.ellipsis,
                                         fontFamily: 'Poppins Bold',
-                                        fontWeight: FontWeight.bold,
                                         fontSize: 18,
                                       ),
                                       maxLines: 1,
@@ -183,7 +180,7 @@ class HomeView extends GetView<HomeController> {
                                       product.description ?? "",
                                       style: const TextStyle(
                                         overflow: TextOverflow.ellipsis,
-                                        fontFamily: 'Poppins',
+                                        fontFamily: 'Poppins Light',
                                         fontSize: 13,
                                       ),
                                       maxLines: 2,

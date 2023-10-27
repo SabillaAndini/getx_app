@@ -40,7 +40,7 @@ flutter:
     - family: Poppins
       fonts: 
         - asset: assets/fonts/Poppins-Black.ttf
-    - family: Poppins Tipis
+    - family: Poppins Light
       fonts: 
         - asset: assets/fonts/Poppins-Light.ttf
     - family: Poppins Medium

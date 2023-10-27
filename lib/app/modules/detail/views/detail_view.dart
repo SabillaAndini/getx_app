@@ -84,7 +84,7 @@ class _DetailViewState extends State<DetailView> {
                             style: const TextStyle(
                               fontSize: 16,
                               color: Colors.black,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Poppins Bold',
                             ),
                             maxLines: 2, // Maksimum 2 baris
                             overflow: TextOverflow
@@ -144,7 +144,7 @@ class _DetailViewState extends State<DetailView> {
                   style: const TextStyle(
                     fontSize: 14,
                     color: Colors.black,
-                    fontFamily: 'Poppins',
+                    fontFamily: 'Poppins Bold',
                   ),
                 ),
               ),
@@ -174,7 +174,7 @@ class _DetailViewState extends State<DetailView> {
                   style: const TextStyle(
                     fontSize: 10,
                     color: Colors.black,
-                    fontFamily: 'Poppins',
+                    fontFamily: 'Poppins Light',
                     height: 1.5,
                   ),
                 ),

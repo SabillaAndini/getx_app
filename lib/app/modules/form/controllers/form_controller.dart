@@ -11,6 +11,15 @@ class FormController extends GetxController {
   TextEditingController productPriceController = TextEditingController();
   TextEditingController productDescriptionController = TextEditingController();
 
+  String selectedCategory =
+      'electronics'; // Buat variabel untuk menyimpan kategori yang dipilih.
+  final items = [
+    'electronics',
+    'jewelery',
+    "men's clothing",
+    "women's clothing",
+  ];
+
   bool checkIsDouble(String? text) {
     try {
       double.parse(text ?? '');
@@ -22,7 +31,7 @@ class FormController extends GetxController {
 
   modelToController(Product product) {
     productNameController.text = product.title ?? '';
-    productCategoryController.text = product.category ?? '';
+    selectedCategory = product.category ?? '';
     productPriceController.text = (product.price ?? '').toString();
     productDescriptionController.text = product.description ?? '';
   }
