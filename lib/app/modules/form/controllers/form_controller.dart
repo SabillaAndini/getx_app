@@ -31,7 +31,9 @@ class FormController extends GetxController {
 
   modelToController(Product product) {
     productNameController.text = product.title ?? '';
-    selectedCategory = product.category ?? '';
+    if (product.category != '' && product.category != null) {
+      selectedCategory = product.category!;
+    }
     productPriceController.text = (product.price ?? '').toString();
     productDescriptionController.text = product.description ?? '';
   }

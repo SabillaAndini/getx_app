@@ -167,85 +167,48 @@ class _FormViewState extends State<FormView> {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        // TextFormField(
-                        //   controller: formController.productCategoryController,
-                        //   validator: (value) => value == null || value == ''
-                        //       ? 'This field is required'
-                        //       : null,
-                        //   style: const TextStyle(
-                        //       fontFamily: 'Poppins Light',
-                        //       fontSize: 15,
-                        //       color: Color(0xff802c6e)),
-                        //   decoration: InputDecoration(
-                        //     hintText: 'Category',
-                        //     hintStyle: const TextStyle(
-                        //       fontFamily: 'Poppins Light',
-                        //     ),
-                        //     border: OutlineInputBorder(
-                        //       borderRadius: BorderRadius.circular(10),
-                        //       borderSide: const BorderSide(
-                        //         color: Color(0xfff5f5f5),
-                        //       ),
-                        //     ),
-                        //     focusedBorder: OutlineInputBorder(
-                        //       borderRadius: BorderRadius.circular(10),
-                        //       borderSide: const BorderSide(
-                        //         color: Color(0xff802c6e),
-                        //       ),
-                        //     ),
-                        //     suffixIcon: DropdownButtonHideUnderline(
-                        //       child: DropdownButton<String>(
-                        //         onChanged: (String? newValue) {
-                        //           setState(() {
-                        //             // Update the selected category.
-                        //             formController
-                        //                     .productCategoryController.text =
-                        //                 newValue ??
-                        //                     ''; // Update the TextFormField text.
-                        //           });
-                        //         },
-                        //         items: items.map<DropdownMenuItem<String>>(
-                        //             (String value) {
-                        //           return DropdownMenuItem<String>(
-                        //             value: value,
-                        //             child: Text(value,
-                        //                 style: const TextStyle(
-                        //                     fontFamily: 'Poppins Light',
-                        //                     color: Color(0xff802c6e))),
-                        //           );
-                        //         }).toList(),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
-
-                        DropdownButton<String>(
+                        DropdownButtonFormField<String>(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(
+                                color: Color(0xfff5f5f5),
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(
+                                color: Color(0xff802c6e),
+                              ),
+                            ),
+                          ),
                           value: formController.selectedCategory.isNotEmpty
                               ? formController.selectedCategory
                               : '',
                           onChanged: (String? newValue) {
                             setState(() {
                               // Update the selected category.
-                              formController.selectedCategory = newValue ??
-                                  ''; // Update the TextFormField text.
+                              formController.selectedCategory = newValue ?? '';
                             });
                           },
                           items: [
                             'electronics',
-                            'jewelery',
+                            'jewelry',
                             "men's clothing",
                             "women's clothing",
                           ].map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
-                              child: Text(value,
-                                  style: const TextStyle(
-                                      fontFamily: 'Poppins Light',
-                                      color: Color(0xff802c6e))),
+                              child: Text(
+                                value,
+                                style: const TextStyle(
+                                  fontFamily: 'Poppins Light',
+                                  color: Color(0xff802c6e),
+                                ),
+                              ),
                             );
                           }).toList(),
                         ),
-
                         const SizedBox(height: 16),
                         TextFormField(
                           controller: formController.productPriceController,

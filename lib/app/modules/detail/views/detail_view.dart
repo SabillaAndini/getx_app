@@ -95,38 +95,25 @@ class _DetailViewState extends State<DetailView> {
                     ),
                     Row(
                       children: [
-                        for (var i = 0; i < 5; i++)
+                        for (int i = 0; i < 5; i++)
                           Icon(
                             Icons.star,
                             color:
-                                i < ((widget.product.rating?.rate ?? 0).round())
-                                    ? const Color.fromARGB(255, 255, 217, 0)
+                                i < (widget.product.rating?.rate ?? 0).floor()
+                                    ? Colors.yellow
                                     : Colors.grey,
-                            size: 17,
+                            size: 18,
                           ),
-                        const SizedBox(width: 8),
+                        SizedBox(width: 5),
                         Text(
-                          '${widget.product.rating?.rate}',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
-                          ),
+                          widget.product.rating?.rate?.toStringAsFixed(1) ?? '',
                         ),
-                        const SizedBox(width: 8),
-                        Container(
-                          width: 1,
-                          height: 14,
-                          color: Colors.grey,
-                        ),
-                        const SizedBox(
-                          width: 8,
-                        ),
+                        SizedBox(width: 3),
+                        Text("|"),
+                        SizedBox(width: 3),
                         Text(
-                          '${widget.product.rating?.count}',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
-                          ),
+                          widget.product.rating?.count?.toStringAsFixed(1) ??
+                              '',
                         ),
                       ],
                     ),
